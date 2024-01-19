@@ -1,7 +1,7 @@
 {
-  "example": {
+  "quickplay": {
     "settings": {
-      "name": "ExampleAddon",
+      "name": "Quickplay",
       "enabled": {
         "name": "Enabled"
       }

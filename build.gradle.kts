@@ -4,18 +4,18 @@ plugins {
     id("net.labymod.gradle.addon")
 }
 
-group = "org.example"
+group = "xyz.holybaechu"
 version = "1.0.0"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 labyMod {
-    defaultPackageName = "org.example" //change this to your main package name (used by all modules)
+    defaultPackageName = "xyz.holybaechu.quickplay" //change this to your main package name (used by all modules)
     addonInfo {
-        namespace = "example"
-        displayName = "ExampleAddon"
-        author = "Example Author"
-        description = "Example Description"
+        namespace = "quickplay"
+        displayName = "Quickplay"
+        author = "holybaechu"
+        description = "Quickly play minigames!"
         minecraftVersion = "*"
         version = System.getenv().getOrDefault("VERSION", "0.0.1")
     }

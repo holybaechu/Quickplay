@@ -1,0 +1,31 @@
+.window {
+    width: 420;
+    height: 300;
+    alignment-x: center;
+    alignment-y: center;
+    border: 1 dark_gray;
+    background-color: rgba(30, 30, 30, 0.9);
+
+    .content {
+      width: 100%;
+      height: 100%;
+      padding: 3;
+      columns: 3;
+      auto: vertical;
+
+      .minigame {
+        padding: 1;
+        width: calc(100%/3-2);
+
+         .icon {
+           alignment: left;
+           width: 20;
+           height: 20;
+         }
+
+        .button {
+          alignment: right;
+          width: calc(100% - 20);
+        }
+    }
+}
