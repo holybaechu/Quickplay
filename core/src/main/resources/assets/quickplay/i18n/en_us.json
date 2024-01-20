@@ -4,6 +4,10 @@
       "name": "Quickplay",
       "enabled": {
         "name": "Enabled"
+      },
+      "hotKey": {
+        "name": "Hotkey",
+        "description": "Hotkey to show Quickplay menu."
       }
     }
   }

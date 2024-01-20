@@ -2,7 +2,7 @@ package xyz.holybaechu.quickplay;
 
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import xyz.holybaechu.quickplay.commands.QuickplayCommand;
+import xyz.holybaechu.quickplay.listener.HotkeyListener;
 
 @AddonMain
 public class QuickplayAddon extends LabyAddon<QuickplayConfiguration> {
@@ -11,7 +11,7 @@ public class QuickplayAddon extends LabyAddon<QuickplayConfiguration> {
   protected void enable() {
     this.registerSettingCategory();
 
-    this.registerCommand(new QuickplayCommand());
+    this.registerListener(new HotkeyListener(this));
 
     this.logger().info("Enabled the Addon");
   }
