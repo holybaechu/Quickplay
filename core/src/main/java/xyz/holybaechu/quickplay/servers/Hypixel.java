@@ -73,7 +73,8 @@ public class Hypixel {
                 Map.entry("Voidless Doubles", "bedwars_eight_two_voidless"),
                 Map.entry("Voidless 4v4v4v4", "bedwars_four_four_voidless"),
                 Map.entry("Armed Doubles", "bedwars_eight_two_armed"),
-                Map.entry("Armed 4v4v4v4", "bedwars_four_four_armed")
+                Map.entry("Armed 4v4v4v4", "bedwars_four_four_armed"),
+                Map.entry("Practice", "bedwars_practice")
                 // Couldn't find information about Underworld and Swappage mode
         )));
         minigames.add(new HypixelMinigame().setName("The Pit").setModes(Map.ofEntries(Map.entry("Standard", "pit"))).setImageURL("https://hypixel.net/styles/hypixel-v2/images/game-icons/Pit-64.png"));
