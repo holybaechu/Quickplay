@@ -30,8 +30,8 @@ public class HotkeyListener {
 
     // Check if connected to hypixel.net
     if(
-        !Laby.labyAPI().serverController().isConnected() &&
-            !Objects.equals(Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost(), "hypixel.net")
+        !Laby.labyAPI().serverController().isConnected() ||
+        !Objects.equals(Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost(), "hypixel.net")
     ) return;
 
     Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new QuickplayActivity(hypixel)));
