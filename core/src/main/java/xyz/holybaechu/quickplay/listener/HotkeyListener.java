@@ -28,10 +28,13 @@ public class HotkeyListener {
 
     if (Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened()) return;
 
+//    addon.logger().info("isConnected(): "+ (Laby.labyAPI().serverController().isConnected() ? "true" : "false"));
+//    if (Laby.labyAPI().serverController().isConnected()) addon.logger().info("getHost(): "+ Laby.labyAPI().serverController().getCurrentServerData().address().getHost());
+
     // Check if connected to hypixel.net
     if(
         !Laby.labyAPI().serverController().isConnected() ||
-        !Objects.equals(Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost(), "hypixel.net")
+        !Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost().endsWith("hypixel.net")
     ) return;
 
     Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new QuickplayActivity(hypixel)));
