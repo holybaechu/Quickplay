@@ -11,7 +11,7 @@
       height: 100%;
       padding: 3;
       columns: 3;
-      auto: horizontal;
+      auto: vertical;
 
       .minigame {
         padding: 1;
