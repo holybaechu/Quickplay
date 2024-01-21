@@ -1,4 +1,4 @@
-package xyz.holybaechu.quickplay;
+package xyz.holyb.quickplay;
 
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.KeybindWidget.KeyBindSetting;

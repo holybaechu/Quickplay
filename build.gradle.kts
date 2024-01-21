@@ -4,13 +4,13 @@ plugins {
     id("net.labymod.gradle.addon")
 }
 
-group = "xyz.holybaechu"
+group = "xyz.holyb"
 version = "1.0.2"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 labyMod {
-    defaultPackageName = "xyz.holybaechu.quickplay" //change this to your main package name (used by all modules)
+    defaultPackageName = "xyz.holyb.quickplay" //change this to your main package name (used by all modules)
     addonInfo {
         namespace = "quickplay"
         displayName = "Quickplay"

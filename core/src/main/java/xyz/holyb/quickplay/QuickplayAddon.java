@@ -1,8 +1,8 @@
-package xyz.holybaechu.quickplay;
+package xyz.holyb.quickplay;
 
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import xyz.holybaechu.quickplay.listener.HotkeyListener;
+import xyz.holyb.quickplay.listener.HotkeyListener;
 
 @AddonMain
 public class QuickplayAddon extends LabyAddon<QuickplayConfiguration> {
