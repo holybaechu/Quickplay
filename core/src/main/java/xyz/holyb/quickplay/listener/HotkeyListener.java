@@ -7,6 +7,8 @@ import net.labymod.api.event.client.input.KeyEvent;
 import net.labymod.api.util.io.web.request.Request;
 import xyz.holyb.quickplay.QuickplayAddon;
 import xyz.holyb.quickplay.activity.QuickplayActivity;
+import xyz.holyb.quickplay.utils.GithubFile;
+import xyz.holyb.quickplay.utils.GithubTree;
 import xyz.holyb.quickplay.utils.Server;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +18,24 @@ public class HotkeyListener {
   private final QuickplayAddon addon;
 
   private final List<Server> servers = new ArrayList<>();
+  private final String serversRepo = "holybaechuLabyAddons/QuickplayServers";
 
   public HotkeyListener(QuickplayAddon addon){
     this.addon = addon;
 
-    servers.add(
-        Request.ofGson(Server.class)
-          .url("https://raw.githubusercontent.com/holybaechuLabyAddons/QuickplayServers/main/Hypixel.json")
-          .executeSync().get()
-    );
+    GithubTree serversRepoTree = Request.ofGson(GithubTree.class)
+        .url(String.format("https://api.github.com/repos/%s/git/trees/main?recursive=1", serversRepo))
+        .executeSync().get();
 
+    for (GithubFile value : serversRepoTree.tree) {
+      if (!value.path.endsWith(".json")) continue;
+
+      servers.add(
+          Request.ofGson(Server.class)
+              .url(String.format("https://raw.githubusercontent.com/%s/main/%s", serversRepo, value.path))
+              .executeSync().get()
+      );
+    }
   }
 
   @Subscribe

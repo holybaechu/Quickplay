@@ -42,8 +42,6 @@ public class QuickplayActivity extends SimpleActivity {
     server.gameModes.forEach((name, gameMode) -> {
       HorizontalListWidget gameModeWidget = new HorizontalListWidget().addId("gamemode");
 
-      System.out.println(gameMode.imageURL);
-
       IconWidget icon = new IconWidget(Icon.url(getImageURL(server, gameMode, name))).addId("icon");
       gameModeWidget.addEntry(icon);
 
