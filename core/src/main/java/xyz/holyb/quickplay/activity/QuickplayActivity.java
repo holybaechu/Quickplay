@@ -14,6 +14,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalLi
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import xyz.holyb.quickplay.utils.Gamemode;
 import xyz.holyb.quickplay.utils.Server;
+import java.util.ArrayList;
 import java.util.Map;
 
 @AutoActivity
@@ -49,8 +50,14 @@ public class QuickplayActivity extends SimpleActivity {
       button.updateComponent(Component.text(name));
 
       button.setActionListener(() -> {
+        if (gameMode.gameModes == null){
+          labyAPI.minecraft().chatExecutor().chat(gameMode.command);
+
+          return;
+        }
+
         if(gameMode.gameModes.size() == 1){
-          labyAPI.minecraft().chatExecutor().chat("/play "+gameMode.gameModes.values().toArray()[0]);
+          labyAPI.minecraft().chatExecutor().chat(((Gamemode) gameMode.gameModes.values().toArray()[0]).command);
         }else {
           Server newServer = new Server();
           Map<String, Gamemode> gameModes = gameMode.gameModes;
