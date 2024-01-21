@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "xyz.holyb"
-version = "1.0.4"
+version = "1.0.5"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
@@ -17,7 +17,7 @@ labyMod {
         author = "holybaechu"
         description = "Quickly play minigames!"
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "1.0.4")
+        version = System.getenv().getOrDefault("VERSION", "1.0.5")
     }
 
     minecraft {

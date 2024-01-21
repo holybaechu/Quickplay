@@ -54,9 +54,13 @@ public class HotkeyListener {
     if (!Laby.labyAPI().serverController().isConnected()) return;
 
     for (Server value : this.servers) {
-      if (!Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost().endsWith(value.ip)) continue;
+      for (String ip : value.ip){
+        if (!Objects.requireNonNull(Laby.labyAPI().serverController().getCurrentServerData()).address().getHost().endsWith(ip)) continue;
 
-      Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new QuickplayActivity(value)));
+        Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new QuickplayActivity(value)));
+
+        return;
+      }
     }
   }
 }
