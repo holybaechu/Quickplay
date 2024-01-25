@@ -14,7 +14,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalLi
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import xyz.holyb.quickplay.utils.Gamemode;
 import xyz.holyb.quickplay.utils.Server;
-import java.util.ArrayList;
 import java.util.Map;
 
 @AutoActivity
