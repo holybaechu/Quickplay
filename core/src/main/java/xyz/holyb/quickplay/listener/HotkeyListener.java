@@ -8,7 +8,6 @@ import net.labymod.api.event.client.input.KeyEvent.State;
 import net.labymod.api.event.client.input.KeyEvent;
 import net.labymod.api.util.JsonFileCache;
 import net.labymod.api.util.io.web.request.Request;
-import net.labymod.api.util.logging.Logging;
 import xyz.holyb.quickplay.QuickplayAddon;
 import xyz.holyb.quickplay.activity.QuickplayActivity;
 import xyz.holyb.quickplay.utils.GithubFile;
@@ -29,24 +28,27 @@ public class HotkeyListener {
   public HotkeyListener(QuickplayAddon addon){
     this.addon = addon;
 
-
-
-    Request.ofGson(GithubTree.class)
+    Request<JsonElement> req = Request.ofGson(JsonElement.class)
         .url(String.format("https://api.github.com/repos/%s/git/trees/main?recursive=1", serversRepo))
-        .execute((response) -> {
-          for (GithubFile value : response.get().tree) {
+        .async();
+
+    JsonFileCache<JsonElement> treeCache = JsonFileCache.create(Path.of("./labymod-neo/cache/quickplay/", "tree.json"), req, "tree.json");
+
+    treeCache.read(false, (_result) -> {
+          for (GithubFile value : gson.fromJson(treeCache.getJsonObject().get().get("tree.json"), GithubTree.class).tree) {
             if (!value.path.endsWith(".json")) continue;
 
             Request<JsonElement> request = Request.ofGson(JsonElement.class)
-                .url(String.format("https://raw.githubusercontent.com/%s/main/%s", serversRepo, value.path));
+                .url(String.format("https://raw.githubusercontent.com/%s/main/%s", serversRepo, value.path))
+                .async();
 
-            JsonFileCache<JsonElement> cache = JsonFileCache.create(Path.of("./labymod-neo/cache/quickplay/", value.path), request, value.path);
+            JsonFileCache<JsonElement> serverCache = JsonFileCache.create(Path.of("./labymod-neo/cache/quickplay/servers", value.path), request, value.path);
 
-            cache.read(true, (result) -> {
-              servers.add(gson.fromJson(result.get(), Server.class));
+            serverCache.read(false, (__result) -> {
+              servers.add(gson.fromJson(serverCache.getJsonObject().get().get(value.path), Server.class));
             });
           }
-        });
+    });
   }
 
   @Subscribe
