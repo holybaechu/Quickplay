@@ -1,0 +1,21 @@
+{
+    "ip": ["skydinse.net", "skydinse.de"],
+    "baseImageURL": "https://raw.githubusercontent.com/holybaechuLabyAddons/QuickplayServers/main/assets/Skydinse/%s.png",
+    "gamemodes": {
+        "LavaRises": {
+            "command": "/game lavarises"
+        },
+        "Duels": {
+            "command": "/game duels"
+        },
+        "BlockParty": {
+            "command": "/game blockparty"
+        },
+        "Murder": {
+            "command": "/game murdermystery"
+        },
+        "Maze": {
+            "command": "/game maze"
+        }
+    }
+}

@@ -1,19 +1,17 @@
 package xyz.holyb.quickplay.listener;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import net.labymod.api.Laby;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent.State;
 import net.labymod.api.event.client.input.KeyEvent;
-import net.labymod.api.util.JsonFileCache;
-import net.labymod.api.util.io.web.request.Request;
 import xyz.holyb.quickplay.QuickplayAddon;
 import xyz.holyb.quickplay.activity.QuickplayActivity;
-import xyz.holyb.quickplay.utils.GithubFile;
-import xyz.holyb.quickplay.utils.GithubTree;
 import xyz.holyb.quickplay.utils.Server;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,33 +20,26 @@ public class HotkeyListener {
   private final QuickplayAddon addon;
 
   private final List<Server> servers = new ArrayList<>();
-  private final String serversRepo = "holybaechuLabyAddons/QuickplayServers";
+  private final List<String> serverFiles = List.of("hypixel.json", "skydinse.json");
+  private final String serversDirectory = "servers";
   private final Gson gson = new Gson();
 
   public HotkeyListener(QuickplayAddon addon){
     this.addon = addon;
 
-    Request<JsonElement> req = Request.ofGson(JsonElement.class)
-        .url(String.format("https://api.github.com/repos/%s/git/trees/main?recursive=1", serversRepo))
-        .async();
+    // Load server data
+    for (String serverFile : serverFiles){
+      try {
+        InputStream in = ResourceLocation.create("quickplay",  String.join("/", serversDirectory, serverFile)).openStream();
+        InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
 
-    JsonFileCache<JsonElement> treeCache = JsonFileCache.create(Path.of("./labymod-neo/cache/quickplay/", "tree.json"), req, "tree.json");
+        servers.add(gson.fromJson(reader, Server.class));
+      } catch (Exception e) {
+        addon.logger().warn("Could not load server: "+serverFile+". Skipping "+serverFile);
 
-    treeCache.read(false, (_result) -> {
-          for (GithubFile value : gson.fromJson(treeCache.getJsonObject().get().get("tree.json"), GithubTree.class).tree) {
-            if (!value.path.endsWith(".json")) continue;
-
-            Request<JsonElement> request = Request.ofGson(JsonElement.class)
-                .url(String.format("https://raw.githubusercontent.com/%s/main/%s", serversRepo, value.path))
-                .async();
-
-            JsonFileCache<JsonElement> serverCache = JsonFileCache.create(Path.of("./labymod-neo/cache/quickplay/servers", value.path), request, value.path);
-
-            serverCache.read(false, (__result) -> {
-              servers.add(gson.fromJson(serverCache.getJsonObject().get().get(value.path), Server.class));
-            });
-          }
-    });
+//        e.printStackTrace();
+      }
+    }
   }
 
   @Subscribe
