@@ -81,7 +81,10 @@ public class HotkeyListener {
       Map<String, Gamemode> gameModes = new HashMap<>();
       for (GameMode gameMode : serverGroup.getAllGameModes().values()) {
         Gamemode newGamemode = new Gamemode();
+
+        if (Objects.isNull(gameMode.getCommand())) continue;
         newGamemode.command = gameMode.getCommand();
+
         gameModes.put(gameMode.getName(), newGamemode);
       }
       newServer.gameModes = gameModes;
