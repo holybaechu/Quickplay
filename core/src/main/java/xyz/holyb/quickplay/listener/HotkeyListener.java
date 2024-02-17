@@ -6,14 +6,19 @@ import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent.State;
 import net.labymod.api.event.client.input.KeyEvent;
+import net.labymod.api.labynet.models.GameMode;
+import net.labymod.api.labynet.models.ServerGroup;
 import xyz.holyb.quickplay.QuickplayAddon;
 import xyz.holyb.quickplay.activity.QuickplayActivity;
+import xyz.holyb.quickplay.utils.Gamemode;
 import xyz.holyb.quickplay.utils.Server;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HotkeyListener {
@@ -65,6 +70,27 @@ public class HotkeyListener {
 
         return;
       }
+    }
+
+    // Laby.net server
+    if (Laby.labyAPI().labyNetController().getCurrentServer().isPresent()) {
+      ServerGroup serverGroup = Laby.labyAPI().labyNetController().getCurrentServer().get();
+      Server newServer = new Server();
+
+      // gamemodes
+      Map<String, Gamemode> gameModes = new HashMap<>();
+      for (GameMode gameMode : serverGroup.getAllGameModes().values()) {
+        Gamemode newGamemode = new Gamemode();
+        newGamemode.command = gameMode.getCommand();
+        gameModes.put(gameMode.getName(), newGamemode);
+      }
+      newServer.gameModes = gameModes;
+
+      if (serverGroup.getAttachment("icon").isPresent()) {
+        newServer.baseImageURL = serverGroup.getAttachment("icon").get().getUrl();
+      }
+
+      Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new QuickplayActivity(newServer)));
     }
   }
 }
