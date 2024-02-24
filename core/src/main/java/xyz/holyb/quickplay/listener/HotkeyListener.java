@@ -87,6 +87,7 @@ public class HotkeyListener {
 
         gameModes.put(gameMode.getName(), newGamemode);
       }
+      if (gameModes.isEmpty()) return;
       newServer.gameModes = gameModes;
 
       if (serverGroup.getAttachment("icon").isPresent()) {
